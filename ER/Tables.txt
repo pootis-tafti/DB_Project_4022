@@ -1,0 +1,69 @@
+CREATE TABLE Account (
+    AID INT PRIMARY KEY,
+    FirstName VARCHAR2(50),
+    LastName VARCHAR2(50),
+    Phone VARCHAR2(50),
+    Email VARCHAR2(50),
+    ActiveCity VARCHAR2(50)
+);
+
+CREATE TABLE Business (
+    BID INT PRIMARY KEY,
+    OID INT,
+    Type VARCHAR2(50),
+    Serialnumber INT,
+    Name VARCHAR2(50)
+    FOREIGN KEY (OID) REFERENCES Account(AID)
+);
+
+CREATE TABLE Address(
+    BID INT not null,
+    Address VARCHAR2(255),
+    Province VARCHAR2(50),
+    City VARCHAR2(50),
+    FOREIGN KEY (BID) REFERENCES Business(BID)
+);
+
+CREATE TABLE Advertisement (
+    ADDID INT PRIMARY KEY,
+    BID INT,
+    AID INT,
+    Description TEXT,
+    Title VARCHAR2(50),
+    Location VARCHAR2(50),
+    Date DATE,
+    State TINYINT,
+    Price INT,
+    FOREIGN KEY (BID) REFERENCES Business(BID),
+    FOREIGN KEY (AID) REFERENCES Account(AID)
+);
+
+CREATE TABLE Access (
+    BID INT,
+    AID INT,
+    Level TINYINT,
+    FOREIGN KEY (BID) REFERENCES Business(BID),
+    FOREIGN KEY (AID) REFERENCES Account(AID)
+);
+
+CREATE TABLE Comment (
+    ADDID INT ,
+    Type VARCHAR2(50),
+    Description TEXT,
+    FOREIGN KEY (ADDID) REFERENCES Advertisement(ADDID)
+);
+
+CREATE TABLE AddStatus (
+    ADDID INT PRIMARY KEY,
+    AdminNote TEXT,
+    LastUpdated DATE,
+    FOREIGN KEY (ADDID) REFERENCES Advertisement(ADDID)
+);
+
+CREATE TABLE Image (
+    ADDID INT,
+    Image BLOB,
+    FOREIGN KEY (ADDID) REFERENCES Advertisement(ADDID)
+);
+
+
