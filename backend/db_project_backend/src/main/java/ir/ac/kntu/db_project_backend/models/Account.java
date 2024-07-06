@@ -5,6 +5,12 @@ public class Account {
 
     private int id;
 
+    private boolean status;
+
+    private String firstName;
+
+    private String lastName;
+
     private String phoneNumber;
 
     private String email;
@@ -13,6 +19,18 @@ public class Account {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
     
     public void setActiveCity(int activeCity) {
@@ -41,5 +59,17 @@ public class Account {
 
     public int getId() {
         return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public boolean getStatus(){
+        return status;
     }
 }
