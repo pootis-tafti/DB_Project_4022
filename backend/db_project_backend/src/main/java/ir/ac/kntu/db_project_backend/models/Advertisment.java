@@ -15,12 +15,18 @@ public class Advertisment {
 
     private String description;
 
+    private boolean isNew;
+
     public void setId(int id) {
         this.id = id;
     }
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
     }
 
     public void setDescription(String description) {
@@ -33,6 +39,10 @@ public class Advertisment {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isNew() {
+        return isNew;
     }
 
     public String getTitle() {
