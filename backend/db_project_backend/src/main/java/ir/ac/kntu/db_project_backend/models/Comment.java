@@ -1,24 +1,21 @@
 package ir.ac.kntu.db_project_backend.models;
 
-
 public class Comment {
 
     private int CommentId;
 
-    private CommentType type;
+    private String type;
 
     private String description;
 
-    public Comment(CommentType type, String description) {
-        this.type = type;
-        this.description = description;
+    public Comment() {
     }
 
     public void setCommentId(int commentId) {
         CommentId = commentId;
     }
 
-    public void setType(CommentType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -30,7 +27,7 @@ public class Comment {
         return CommentId;
     }
 
-    public CommentType getType() {
+    public String getType() {
         return type;
     }
 
