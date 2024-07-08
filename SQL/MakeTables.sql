@@ -51,25 +51,26 @@ CREATE TABLE Accesses (
 );
 
 CREATE TABLE Comments (
-    ADDID INT ,
-    Type TINYINTINT,
-    Description TEXT,
-    FOREIGN KEY (ADDID) REFERENCES Advertisements(ADDID)
+    ADDID INT NOT NULL,
+    Type TINYINT NOT NULL,
+    Description TEXT NOT NULL,
+    FOREIGN KEY (ADDID) REFERENCES Advertisements(ADDID),
     Foreign Key (Type) REFERENCES Type(ID)
 );
 
 CREATE TABLE AddStatus (
-    Status BIT,
-    ADDID INT PRIMARY KEY,
-    AdminNote TEXT,
+    Status BIT NOT NULL,
+    ADDID INT PRIMARY KEY NOT NULL,
+    AdminNote TEXT NOT NULL,
     LastUpdated DATE,
-    FOREIGN KEY (ADDID) REFERENCES Advertisements(ADDID)
+    FOREIGN KEY (ADDID) REFERENCES Advertisements(ADDID),
     Foreign Key (Status) REFERENCES Status(ID)
 );
 
 create TABLE Status(
-    ID BIT,
-    Status VARCHAR(8)
+    ID BIT NOT NULL,
+    Status VARCHAR(8),
+    PRIMARY KEY (ID)
 );
 
 INSERT INTO Status(ID, Status) VALUES 
