@@ -1,6 +1,6 @@
 package ir.ac.kntu.db_project_backend.models;
 
-public class Bussiness {
+public class Business {
     private int id;
 
     private int ownerId;
