@@ -6,18 +6,19 @@ CREATE TABLE Accounts (
     Phone VARCHAR(50) NOT NULL,
     Email VARCHAR(50) NOT NULL,
     ActiveCity INT NOT NULL,
+    BIT Status NOT NULL DEFAULT 1,
     PRIMARY KEY (AID),
     Foreign Key (ActiveCity) REFERENCES Cities(id)
 );
 
 CREATE TABLE Businesses (
-    BID A INT NOT NULL,
+    BID INT UNIQUE AUTO_INCREMENT,
     OID INT NOT NULL,
     Type VARCHAR(50) NOT NULL,
     SerialNUMBER INT NOT NULL,
     Name VARCHAR(50) NOT NULL,
     PRIMARY KEY (BID),
-    FOREIGN KEY (AID) REFERENCES Accounts(AID)
+    FOREIGN KEY (OID) REFERENCES Accounts(AID)
 );
 
 CREATE TABLE Addresses(
@@ -38,14 +39,6 @@ CREATE TABLE Advertisements (
     DateModified DATE NOT NULL,
     Price INT NOT NULL,
     IsNew BIT NOT NULL,
-    FOREIGN KEY (BID) REFERENCES Businesses(BID),
-    FOREIGN KEY (AID) REFERENCES Accounts(AID)
-);
-
-CREATE TABLE Accesses (
-    BID INT NOT NULL,
-    AID INT NOT NULL,
-    Level TINYINT,
     FOREIGN KEY (BID) REFERENCES Businesses(BID),
     FOREIGN KEY (AID) REFERENCES Accounts(AID)
 );
