@@ -17,6 +17,8 @@ public class Advertisment {
 
     private boolean isNew;
 
+    private AddStatus addStatus;
+
     public void setId(int id) {
         this.id = id;
     }
@@ -63,5 +65,13 @@ public class Advertisment {
 
     public int getId() {
         return id;
+    }
+
+    public void setAddStatus(AddStatus addStatus) {
+        this.addStatus = addStatus;
+    }
+
+    public AddStatus getAddStatus() {
+        return addStatus;
     }
 }

@@ -11,12 +11,9 @@ public class AddStatus {
 
     private String adminNote;
 
-    private int addId;
-
     public AddStatus(boolean status, String adminNote, int addId, Date date) {
         this.status = status;
         this.adminNote = adminNote;
-        this.addId = addId;
         this.date = date;
     }
 
@@ -32,18 +29,10 @@ public class AddStatus {
         this.adminNote = adminNote;
     }
 
-    public void setAddId(int addId) {
-        this.addId = addId;
-    }
-
     public void setDate(Date date) {
         this.date = date;
     }
-
-    public int getAddId() {
-        return addId;
-    }
-
+    
     public Date getDate() {
         return date;
     }
