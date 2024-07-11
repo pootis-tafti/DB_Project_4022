@@ -11,13 +11,15 @@ import ir.ac.kntu.db_project_backend.models.Bussiness;
 public class BussinessRowMapper implements RowMapper<Bussiness> {
     @Override
     @Nullable
-    public Bussiness mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public Bussiness mapRow(@Nullable ResultSet rs, int rowNum) throws SQLException {
+        if(rs == null) return null;
         Bussiness bussiness = new Bussiness();
         bussiness.setId(rs.getInt("BID"));
         bussiness.setName(rs.getString("Name"));
         bussiness.setOwnerId(rs.getInt("OID"));
         bussiness.setSerialNumber(rs.getString("SerialNUMBER"));
         bussiness.setType(rs.getString("Type"));
+        bussiness.setAddress(new AddressRowMapper().mapRow(rs, rowNum));
         return bussiness;
     }
 }

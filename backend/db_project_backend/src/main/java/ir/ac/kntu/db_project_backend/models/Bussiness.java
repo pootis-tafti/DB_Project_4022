@@ -11,6 +11,8 @@ public class Bussiness {
 
     private String name;
 
+    private Address address;
+
     public void setId(int id) {
         this.id = id;
     }
@@ -49,5 +51,13 @@ public class Bussiness {
 
     public String getName() {
         return name;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 }

@@ -4,7 +4,7 @@ public class Comment {
 
     private int CommentId;
 
-    private String type;
+    private CommentType type;
 
     private String description;
 
@@ -15,7 +15,7 @@ public class Comment {
         CommentId = commentId;
     }
 
-    public void setType(String type) {
+    public void setType(CommentType type) {
         this.type = type;
     }
 
@@ -27,7 +27,7 @@ public class Comment {
         return CommentId;
     }
 
-    public String getType() {
+    public CommentType getType() {
         return type;
     }
 

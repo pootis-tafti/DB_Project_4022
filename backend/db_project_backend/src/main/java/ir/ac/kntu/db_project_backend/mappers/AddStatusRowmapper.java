@@ -12,8 +12,8 @@ public class AddStatusRowmapper implements RowMapper<AddStatus>{
     @Override
     @Nullable
     public AddStatus mapRow(@Nullable ResultSet rs, int rowNum) throws SQLException {
+        if(rs == null) return null;
         AddStatus addStatus = new AddStatus();
-        addStatus.setAddId(rs.getInt("ADDID"));
         addStatus.setAdminNote(rs.getString("AdminNote"));
         addStatus.setStatus(rs.getBoolean("Status"));
         addStatus.setDate(rs.getDate("LastUpdated"));

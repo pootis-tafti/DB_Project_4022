@@ -11,10 +11,11 @@ import ir.ac.kntu.db_project_backend.models.City;
 public class CityRowMapper implements RowMapper<City>{
     @Override
     @Nullable
-    public City mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public City mapRow(@Nullable ResultSet rs, int rowNum) throws SQLException {
+        if(rs == null) return null;
         City city = new City();
         city.setCityId(rs.getInt("id"));
-        city.setProvinceId(rs.getInt("province_id"));
+        city.setProvince(new ProvinceRowMapper().mapRow(rs, rowNum));
         city.setName(rs.getString("name"));
         return city;
     }

@@ -12,11 +12,12 @@ public class CommentRowMapper implements RowMapper<Comment>{
     
     @Override
     @Nullable
-    public Comment mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public Comment mapRow(@Nullable ResultSet rs, int rowNum) throws SQLException {
+        if(rs == null) return null;
         Comment comment = new Comment();
         comment.setCommentId(rs.getInt("ADDID"));
         comment.setDescription(rs.getString("Description"));
-        comment.setType(rs.getString("Type"));
+        comment.setType(new CommentTypeRowMapper().mapRow(rs, rowNum));
         return comment;
     }
 }

@@ -15,9 +15,7 @@ public class Account {
 
     private String email;
 
-    private String activeCity;
-
-    private String activeProvince;
+    private City activeCity;
 
     public void setId(int id) {
         this.id = id;
@@ -34,21 +32,13 @@ public class Account {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    public void setActiveProvince(String activeProvince) {
-        this.activeProvince = activeProvince;
-    }
     
-    public void setActiveCity(String activeCity) {
+    public void setActiveCity(City activeCity) {
         this.activeCity = activeCity;
     }
 
-    public String getActiveCity() {
+    public City getActiveCity() {
         return activeCity;
-    }
-
-    public String getActiveProvince() {
-        return activeProvince;
     }
 
     public void setEmail(String email) {
