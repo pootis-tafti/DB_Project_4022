@@ -20,6 +20,7 @@ public class BusinessRepository {
     @Autowired
     private JdbcTemplate template;
 
+
     private final BusinessRowMapper ROW_MAPPER = new BusinessRowMapper();
 
     private final String MAIN_QUERY = "SELECT * FROM "

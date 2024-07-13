@@ -1,15 +1,14 @@
 package ir.ac.kntu.db_project_backend.services;
 
+import ir.ac.kntu.db_project_backend.models.Business;
+import ir.ac.kntu.db_project_backend.models.City;
+import ir.ac.kntu.db_project_backend.repositories.BusinessRepository;
+import ir.ac.kntu.db_project_backend.repositories.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-
-import ir.ac.kntu.db_project_backend.models.Business;
-import ir.ac.kntu.db_project_backend.models.City;
-import ir.ac.kntu.db_project_backend.repositories.AddressRepository;
-import ir.ac.kntu.db_project_backend.repositories.BusinessRepository;
 
 import java.util.List;
 
@@ -22,38 +21,50 @@ public class BusinessService {
     @Autowired
     private AddressRepository addressRepository;
 
-    @Cacheable(value = "businessesCache", key = "#root.methodName")
-    public List<Business> findAll() {
-        return businessRepository.findAll();
-    }
-
-    @Cacheable(value = "businessesCache", key = "#id")
+    @Cacheable(value = "businesses", key = "#id")
     public List<Business> findByOwnerId(int id) {
         return businessRepository.findByOwnerId(id);
     }
 
-    @Cacheable(value = "businessesCache", key = "#city.getCityId()")
+    @Cacheable(value = "businessesByCity", key = "#city")
     public List<Business> findByCity(City city) {
         return businessRepository.findByCity(city);
     }
 
-    @Cacheable(value = "businessesCache", key = "#name")
-    public List<Business> findByName(String name) {
-        return businessRepository.findByKeyword(name);
+    @Cacheable(value = "businessesByKeyword", key = "#keyword")
+    public List<Business> findByKeyword(String keyword) {
+        return businessRepository.findByKeyword(keyword);
     }
 
-    @CachePut(value = "businessesCache", key = "#business.id")
-    public void updateBusiness(Business business) {
-        businessRepository.updateBusiness(business, addressRepository);
+    @Cacheable(value = "businesses")
+    public List<Business> findAll() {
+        return businessRepository.findAll();
     }
 
-    @CacheEvict(value = "businessesCache", key = "#business.id")
+    @Caching(evict = {
+        @CacheEvict(value = "businesses", allEntries = true),
+        @CacheEvict(value = "businessesByCity", allEntries = true),
+        @CacheEvict(value = "businessesByKeyword", allEntries = true)
+    })
     public void addBusiness(Business business) {
         businessRepository.addBusiness(business, addressRepository);
     }
 
-    @CacheEvict(value = "businessesCache", key = "#BID")
-    public void deleteBusiness(int BID) {
-        businessRepository.delete(BID);
+    @Caching(evict = {
+        @CacheEvict(value = "businesses", key = "#business.id"),
+        @CacheEvict(value = "businessesByCity", allEntries = true),
+        @CacheEvict(value = "businessesByKeyword", allEntries = true)
+    })
+    public void updateBusiness(Business business) {
+        businessRepository.updateBusiness(business, addressRepository);
+    }
+
+    @Caching(evict = {
+        @CacheEvict(value = "businesses", key = "#id"),
+        @CacheEvict(value = "businessesByCity", allEntries = true),
+        @CacheEvict(value = "businessesByKeyword", allEntries = true)
+    })
+    public void delete(int id) {
+        businessRepository.delete(id);
     }
 }
