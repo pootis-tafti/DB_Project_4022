@@ -20,9 +20,6 @@ public class BusinessRepository {
     @Autowired
     private JdbcTemplate template;
 
-    @Autowired
-    private AddressRepository addressRepository;
-
     private final BusinessRowMapper ROW_MAPPER = new BusinessRowMapper();
 
     private final String MAIN_QUERY = "SELECT * FROM "
@@ -43,23 +40,23 @@ public class BusinessRepository {
             ROW_MAPPER,city.getCityId(),city.getName());
     }
 
-    public List<Business> findByName(City city){
-        return template.query(MAIN_QUERY + "WHERE C.id = ? OR C.name = ?", 
-            ROW_MAPPER,city.getCityId(),city.getName());
+    public List<Business> findByKeyword(String keyword){
+        return template.query(MAIN_QUERY + "WHERE Name EXPREG ? OR Type EXPREG ?", 
+            ROW_MAPPER,keyword,keyword);
     }
 
-    public void updateBusiness(Business business){
+    public void updateBusiness(Business business, AddressRepository repository){
         String sql = "UPDATE accounts SET Name = ?, SerialNumber = ?"
             + "Type = ? Where BID = ?";
 
         template.update(sql, business.getName(),business.getSerialNumber(),business.getType(),business.getId());
-        addressRepository.updateAddress(business.getAddress(), business.getId());
+        repository.updateAddress(business.getAddress(), business.getId());
     }
 
-    public void addBusiness(Business business){
+    public void addBusiness(Business business, AddressRepository repository){
         String sql = "INSERT INTO Businesses (OID, Type, SerialNUMBER, Name) VALUES"
             +"(?,?,?,?)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
+        KeyHolder BID = new GeneratedKeyHolder();
         template.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, business.getOwnerId());
@@ -67,10 +64,12 @@ public class BusinessRepository {
             ps.setString(3, business.getSerialNumber());
             ps.setString(4, business.getName());
             return ps;
-        }, keyHolder);
-        addressRepository.addAddress(business.getAddress(), keyHolder.getKey().intValue());
+        }, BID);
+        repository.addAddress(business.getAddress(), BID.getKey().intValue());
     }
 
-    
+    public void delete(int BID){
+        template.update("DELETE FROM Businesses WHERE BID = ?", BID);
+    }
     
 }

@@ -2,10 +2,12 @@ package ir.ac.kntu.db_project_backend.repositories;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import ir.ac.kntu.db_project_backend.mappers.AddressRowMapper;
 import ir.ac.kntu.db_project_backend.models.Address;
 
+@Repository
 public class AddressRepository {
     
     @Autowired

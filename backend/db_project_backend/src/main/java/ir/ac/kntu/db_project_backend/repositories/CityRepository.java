@@ -27,8 +27,8 @@ public class CityRepository {
         return template.query(MAIN_QUERY + "WHERE province_id = ?" + provinceId, ROW_MAPPER);
     }
 
-    public List<City> findByName(int provinceId){
-        return template.query(MAIN_QUERY + "WHERE name = ?" + provinceId, ROW_MAPPER);
+    public List<City> findByName(String name){
+        return template.query(MAIN_QUERY + "WHERE name = ?",ROW_MAPPER, name );
     }
 
     public City findById(int id){

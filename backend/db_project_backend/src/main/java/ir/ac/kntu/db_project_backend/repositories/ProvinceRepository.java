@@ -16,16 +16,15 @@ public class ProvinceRepository {
     @Autowired
     private JdbcTemplate template;
 
-    @Autowired
-    private ProvinceRowMapper rowMapper;
+    private final ProvinceRowMapper ROW_MAPPER = new ProvinceRowMapper();
 
     private final String MAIN_QUERY = "SELECT * FROM provinces ";
     
     public List<Province> findAll(){
-        return template.query(MAIN_QUERY, rowMapper);
+        return template.query(MAIN_QUERY, ROW_MAPPER);
     }
 
     public Province findById(int id){
-        return template.queryForObject(MAIN_QUERY + "WHERE id = ?", rowMapper,id);
+        return template.queryForObject(MAIN_QUERY + "WHERE id = ?", ROW_MAPPER);
     }
 }

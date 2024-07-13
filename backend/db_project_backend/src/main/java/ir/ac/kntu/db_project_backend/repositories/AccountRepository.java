@@ -21,16 +21,18 @@ public class AccountRepository {
     private final String MAIN_QUERY = "SELECT * FROM Accounts AS A JOIN cities AS C JOIN provinces " 
         + "ON C.id = A.ActiveCity AND C.province_id = provinces.id";
 
-    public void updateAccount(int id, String firstName, String lastName, City city,String phone, String Email ){
+    public void updateAccount(Account account){
         String sql = "UPDATE accounts SET FirstName =?," + 
             "LastName= ? , Phone= ? , Email= ? , ActiveCity= ? WHERE AID = ?";
-        template.update(sql, firstName, lastName, phone, Email, city.getCityId(), id);
+        template.update(sql, account.getFirstName(), account.getLastName(),
+             account.getPhoneNumber(), account.getEmail(), account.getActiveCity().getCityId(), account.getId());
     }
 
-    public void createAccount(String firstName, String lastName, City city,String phone, String Email){
+    public void createAccount(Account account){
         String sql = "INSERT INTO Accounts (FirstName, LastName, Phone, Email, ActiveCity) VALUES"
             +"(?, ?, ?, ?, ?)";
-        template.update(sql,firstName, lastName, phone, Email, city.getCityId());
+        template.update(sql, account.getFirstName(), account.getLastName(),
+        account.getPhoneNumber(), account.getEmail(), account.getActiveCity().getCityId());
     }
 
     public void deleteAccount(int id){
@@ -59,12 +61,9 @@ public class AccountRepository {
         return template.query(sql,ROW_MAPPER, lastName);
     }
 
-    public List<Account> findByCities(String... cities){
-        String sql = MAIN_QUERY + " WHERE  ActiveCity = " + cities[0];
-        for (int i = 1; i < cities.length; i++) {
-            sql += " OR ActiveCity = " + "";
-        }
-        return template.query(sql,ROW_MAPPER);
+    public List<Account> findByCity(City city){
+        String sql = MAIN_QUERY + " WHERE  ActiveCity = ?";
+        return template.query(sql,ROW_MAPPER, city.getCityId());
     }
 
     public Account findById(int id){
