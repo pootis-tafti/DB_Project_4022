@@ -20,6 +20,8 @@ public class AdvertismentRowMapper implements RowMapper<Advertisment> {
         advertisment.setPrice(rs.getInt("Price"));
         advertisment.setTitle(rs.getString("Title"));
         advertisment.setIsNew(rs.getBoolean("IsNew"));
+        advertisment.setAccountId(rs.getInt("AID"));
+        advertisment.setBussinessId(rs.getInt("BID"));
         advertisment.setAddStatus(new AddStatusRowmapper().mapRow(rs, rowNum));
         return advertisment;
     }

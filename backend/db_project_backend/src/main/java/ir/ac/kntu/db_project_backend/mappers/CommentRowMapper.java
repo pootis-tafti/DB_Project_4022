@@ -16,6 +16,7 @@ public class CommentRowMapper implements RowMapper<Comment>{
         if(rs == null) return null;
         Comment comment = new Comment();
         comment.setCommentId(rs.getInt("ADDID"));
+        comment.setAccountId(rs.getInt("AID"));
         comment.setDescription(rs.getString("Description"));
         comment.setType(new CommentTypeRowMapper().mapRow(rs, rowNum));
         return comment;

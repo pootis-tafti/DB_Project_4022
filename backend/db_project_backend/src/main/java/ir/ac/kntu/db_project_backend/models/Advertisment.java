@@ -7,6 +7,10 @@ public class Advertisment {
 
     private int id;
 
+    private int accountId;
+
+    private int bussinessId;
+
     private String title;
     
     private int price;
@@ -21,6 +25,10 @@ public class Advertisment {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
     public void setDate(Date date) {
@@ -67,11 +75,23 @@ public class Advertisment {
         return id;
     }
 
+    public int getAccountId() {
+        return accountId;
+    }
+
     public void setAddStatus(AddStatus addStatus) {
         this.addStatus = addStatus;
     }
 
     public AddStatus getAddStatus() {
         return addStatus;
+    }
+
+    public int getBussinessId() {
+        return bussinessId;
+    }
+
+    public void setBussinessId(int bussinessId) {
+        this.bussinessId = bussinessId;
     }
 }
