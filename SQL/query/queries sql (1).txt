@@ -1,0 +1,480 @@
+
+CREATE TABLE Accounts (
+    AID INT NOT NULL,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Phone VARCHAR(50),
+    Email VARCHAR(50),
+    ActiveCity VARCHAR(50),
+    Date DATE,
+    PRIMARY KEY (AID)
+    
+);
+Create table Poshtiban(
+    AID INT primary key,
+    Name VARCHAR(50),
+    Family VARCHAR(50),
+   Phone VARCHAR(50),
+    Email VARCHAR(50)
+);
+
+CREATE TABLE Businesses (
+    BID INT NOT NULL,
+    AID INT NOT NULL,
+    Type VARCHAR(50),
+    SerialNUMBER INT,
+    Name VARCHAR(50),
+    PRIMARY KEY (BID),
+    FOREIGN KEY (AID) REFERENCES Accounts(AID)
+);
+CREATE TABLE Cities(
+    Cid int primary key,
+    Cname varchar(50) not null,
+    Province varchar(50) not null
+);
+
+CREATE TABLE Addresses(
+    BID INT PRIMARY key, 
+    Address VARCHAR(255),
+    Cid int NOT NULL,
+    FOREIGN KEY (BID) REFERENCES Businesses(BID),
+    FOREIGN KEY (Cid) REFERENCES Cities(Cid)
+);
+ 
+
+CREATE TABLE Advertisements (
+    ADDID INT PRIMARY KEY,
+    BID INT,
+    AID INT,
+    Description TEXT,
+    Title VARCHAR(50),
+    Location VARCHAR(255),
+    Date DATE,
+    Price INT,
+    Viewss INT,
+    FOREIGN KEY (BID) REFERENCES Businesses(BID),
+    FOREIGN KEY (AID) REFERENCES Accounts(AID)
+);
+
+CREATE TABLE Accesses (
+    BID INT,
+    AID INT,
+    Level TINYINT,
+    FOREIGN KEY (BID) REFERENCES Businesses(BID),
+    FOREIGN KEY (AID) REFERENCES Accounts(AID)
+);
+
+CREATE TABLE Comments (
+    ADDID INT ,
+    Type VARCHAR(50),
+    Description TEXT,
+    FOREIGN KEY (ADDID) REFERENCES Advertisements(ADDID)
+);
+
+CREATE TABLE AddStatus (
+    ADDID INT PRIMARY KEY,
+    PoshtibanAID INT,
+    AdminNote TEXT,
+    LastUpdated DATE,
+    FOREIGN KEY (ADDID) REFERENCES Advertisements(ADDID),
+    FOREIGN KEY (PoshtibanAID) REFERENCES Poshtiban(AID)
+);
+
+CREATE TABLE Images (
+    ADDID INT,
+    ImageLink VARCHAR(255),
+    FOREIGN KEY (ADDID) REFERENCES Advertisements(ADDID)
+);
+INSERT INTO Accounts (AID, FirstName, LastName, Phone, Email, ActiveCity,Date) VALUES
+(1, 'Ali', 'Ahmadi', '09123456789', 'ali.ahmadi@example.com', 'Tehran','2024-04-13'),
+(2, 'Sara', 'Karimi', '09123456780', 'sara.karimi@example.com', 'Shiraz','2024-03-13'  ),
+(3, 'Reza', 'Hosseini', '09123456781', 'reza.hosseini@example.com', 'Isfahan','2024-02-13'  ),
+(4, ' Zahra', 'Zahraee', '09123006781', 'zahra.zahraee@example.com','Tehran','2024-01-13' );
+
+INSERT INTO Poshtiban(AID,Name,Family,Phone,Email) VALUES (1,'mahtab','mahtabi','09123000789', 'm.mahtab@example.com'),(2,'sahar','sarayi','09123456789','s.sahar@example.com');
+-- جدول Businesses
+INSERT INTO Businesses (BID, AID, Type, SerialNUMBER, Name) VALUES
+(1, 1, 'food', 12345, 'Ali Restaurant'),
+(2, 2, 'Bookstore', 12346, 'Sara Bookstore'),
+(3, 4, 'food', 12347, 'zahra cafe'),
+(4, 4, 'food', 12348, 'zahra cafe'),
+(5, 4, 'Bookstore', 12349, 'zahra book');
+
+INSERT INTO Cities (Cid,Cname,Province) VALUES
+(1,'Tehran','Tehran'),(2,'Shiraz','Shiraz'),(3,'Isfahan','Isfahan'),(4,'Yazd','Yazd'),(5,'Tehran','Pardis');
+-- جدول Addresses
+INSERT INTO Addresses (BID, Address, Cid) VALUES
+(1, '123 Tehran Street',1),
+(2, '456 Shiraz Street',2),
+(3, '127 Tehran Street',5),
+(4, '127 Isfahan Street',3),
+(5, '127 Isfahan Street',3);
+-- جدول Advertisements
+INSERT INTO Advertisements (ADDID, BID, AID, Description, Title, Location, Date, Price,viewss) VALUES
+(1, 1, 1, 'Great food', 'Ali Restaurant Ad', 'Tehran', '2024-07-13', 100,1),
+(2, 2, 2, 'Best books', 'Sara Bookstore Ad', 'Shiraz', '2024-05-06', 150,2),
+(3,1,1, 'Great food', 'Ali Restaurant Ad', 'Tehran', '2024-04-01', 200,3),
+(4,1,1, 'Great food', 'Ali Restaurant Ad', 'Tehran', '2024-07-14', 300,4),
+(5,3,4, 'Great cafe', 'zahra cafe Ad', 'Tehran', '2024-07-10', 250,5),
+(6,4,4, 'Great cafe', 'zahra cafe Ad', 'Isfahan', '2024-07-12', 250,6),
+(7,5,4, 'Great cafe', 'zahra book Ad', 'Isfahan', '2024-07-11', 250,7);
+-- جدول Accesses
+INSERT INTO Accesses (BID, AID, Level) VALUES
+(1, 1, 1),
+(2, 2, 2);
+
+-- جدول Comments
+INSERT INTO Comments (ADDID, Type, Description) VALUES
+(1, 'restaurant', 'Great restaurant!'),
+(2, 'book', 'Not so good books.'),(3, 'restaurant', 'good.'),
+(3, 'restaurant', 'not bad.'),(3, 'restaurant', 'not bad.');
+-- جدول AddStatus
+INSERT INTO AddStatus (ADDID,PoshtibanAID, AdminNote, LastUpdated) VALUES
+(1,1, 'accept', '2024-07-11'),
+(2,1, 'accept', '2024-07-12');
+
+-- جدول Images
+INSERT INTO Images (ADDID, ImageLink) VALUES
+(1, 'http://example.com/image1.jpg'),
+(2, 'http://example.com/image2.jpg');
+
+
+  
+
+
+
+
+
+
+1
+SELECT FirstName, LastName
+FROM Accounts
+WHERE AID NOT IN (SELECT AID FROM Advertisements);
+    
+2
+
+SELECT FirstName, LastName
+FROM Accounts 
+WHERE AID IN (SELECT AID FROM Businesses);
+3
+
+SELECT AID, YEAR(Date) AS Year, MONTH(Date) AS Month, SUM(Price) AS TotalPrice
+FROM Advertisements
+GROUP BY AID, YEAR(Date), MONTH(Date);
+
+5
+SELECT a.FirstName, a.LastName
+FROM Accounts a
+JOIN Advertisements ad ON a.AID = ad.AID
+JOIN Addresses addr ON ad.BID = addr.BID
+GROUP BY a.AID, addr.CID
+HAVING COUNT(ad.ADDID) <= 1;
+
+
+6
+
+SELECT a.*
+FROM Accounts a
+JOIN Advertisements ad ON a.AID = ad.AID
+ORDER BY ad.Date DESC
+LIMIT 1;
+
+7
+SELECT a.Phone, a.Email
+FROM Accounts a
+JOIN Advertisements ad ON a.AID = ad.AID
+GROUP BY a.AID
+HAVING AVG(ad.Price) > (SELECT AVG(Price) FROM Advertisements);
+
+
+8
+
+SELECT   Comments.Type, COUNT(Comments.ADDID) AS NumberOfAds
+
+FROM Comments
+
+GROUP BY Comments.Type;
+
+9
+SELECT a.FirstName, a.LastName, COUNT(ad.ADDID) AS NumberOfAds
+FROM Accounts a
+JOIN Advertisements ad ON a.AID = ad.AID
+WHERE ad.Date >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+GROUP BY a.AID
+ORDER BY NumberOfAds DESC
+LIMIT 3;
+
+
+10
+SELECT c.Cname, COUNT(ad.ADDID) AS NumberOfAds
+FROM Advertisements ad
+JOIN Addresses addr ON ad.BID = addr.BID
+JOIN Cities c ON addr.Cid = c.Cid
+WHERE c.Cname= 'Tehran'
+GROUP BY c.Cid;
+
+
+11
+SELECT DISTINCT ac.ActiveCity
+FROM Accounts ac
+JOIN (
+    SELECT AID, MIN(Date) AS OldestRegistration
+    FROM Accounts
+    GROUP BY AID
+) AS oldest ON ac.AID = oldest.AID
+JOIN Advertisements ad ON ac.AID = ad.AID
+WHERE ac.Date = oldest.OldestRegistration;
+
+
+12
+
+SELECT Name,Family
+From Poshtiban;
+
+13
+SELECT a.FirstName, a.LastName
+FROM Accounts a
+JOIN Advertisements ad ON a.AID = ad.AID
+GROUP BY a.AID
+HAVING COUNT(ad.ADDID) >= 2;
+
+14
+SELECT a.FirstName, a.LastName
+FROM Accounts a
+JOIN Businesses b ON a.AID = b.AID
+JOIN Advertisements ad ON a.AID = ad.AID
+WHERE b.Type = 'Bookstore'
+GROUP BY a.AID
+HAVING COUNT(ad.ADDID) <= 1;
+
+
+15
+SELECT a.Phone, a.Email
+FROM Accounts a
+JOIN Businesses b ON a.AID = b.AID
+JOIN Advertisements ad ON a.AID = ad.AID
+GROUP BY a.AID
+
+16
+SELECT ad.Title
+FROM Advertisements ad
+WHERE ad.Date = CURDATE()
+ORDER BY ad.Date, ad.ADDID;
+
+17
+Select ADDID,Viewss
+from Advertisements
+order by viewss desc
+limit 1
+offset 1 ;
+
+18
+
+
+19
+UPDATE Accounts
+SET LastName = 'mohamadi'
+WHERE AID = (
+SELECT a.AID
+FROM Accounts a
+JOIN Advertisements ad ON a.AID = ad.AID
+JOIN AddStatus s ON ad.ADDID = s.ADDID
+WHERE s.AdminNote= 'reject'
+GROUP BY a.AID
+ORDER BY COUNT(s.AdminNote) DESC
+LIMIT 1
+
+);
+
+
+20
+DELETE FROM Advertisements ad
+JOIN Businesses b ON ad.BID = b.BID
+WHERE b.Type ='home tool'
+AND AID = (SELECT AID FROM Accounts WHERE LastName = 'mohamadi')
+AND ADDID IN (SELECT ADDID FROM AddStatus WHERE AdminNote= 'reject');
+
+21
+DELETE FROM Advertisements
+WHERE ADDID IN (SELECT ADDID FROM AddStatus WHERE AdminNote = 'reject');
+
+22
+
+23
+
+SELECT ad.Title AS Advertisement_Title, com.Type AS Report_Type, COUNT(*) AS Report_Count
+FROM Advertisements ad
+JOIN Comments com ON ad.ADDID = com.ADDID
+GROUP BY ad.Title, com.Type
+HAVING COUNT(*) = (
+    SELECT MAX(report_count)
+    FROM (
+        SELECT COUNT(*) AS report_count
+        FROM Advertisements ad
+        JOIN Comments com ON ad.ADDID = com.ADDID
+        GROUP BY ad.Title, com.Type
+    ) AS max_reports
+);
+
+
+ 
+
+
+
+
+
+1
+
+ DELIMITER $$
+
+CREATE PROCEDURE GetAdTitles(IN userContact VARCHAR(50))
+BEGIN
+    SELECT a.Title, a.Date
+    FROM Advertisements a
+    JOIN Accounts ac ON a.AID = ac.AID
+    WHERE ac.Email = userContact OR ac.Phone = userContact
+    ORDER BY a.Date DESC;
+END$$
+
+DELIMITER ;
+
+call GetAdTitles('09123456789');
+
+ 2
+DELIMITER $$
+
+CREATE PROCEDURE GetRejectedUsersByPoshtiban(IN userContact VARCHAR(50))
+BEGIN
+    SELECT DISTINCT ac.FirstName, ac.LastName
+    FROM Accounts ac
+    JOIN AddStatus ads ON ac.AID = ads.ADDID
+    JOIN Advertisements adv ON adv.ADDID = ads.ADDID
+    JOIN Poshtiban ps ON ps.AID = ads.PoshtibanAID
+    WHERE (ps.Email = userContact OR ps.Phone = userContact) 
+      AND ads.AdminNote = 'reject';
+END$$
+
+DELIMITER ;
+CALL GetRejectedUsersByPoshtiban('m.mahtab@example.com');
+
+
+
+ 3
+DELIMITER $$
+
+CREATE PROCEDURE GetApprovedAdsByCity(IN cityName VARCHAR(50), IN category VARCHAR(50))
+BEGIN
+    DECLARE provinceName VARCHAR(50);
+    SELECT Cname INTO provinceName
+    FROM Cities
+    WHERE Province = cityName; 
+    SELECT a.Title, a.Date
+    FROM Advertisements a
+    JOIN Businesses b ON a.BID = b.BID
+    JOIN Addresses ad ON b.BID = ad.BID
+    JOIN Cities c ON ad.Cid = c.Cid
+    JOIN AddStatus ads ON a.ADDID = ads.ADDID
+    WHERE c.Cname = provinceName
+      AND b.Type = category
+      AND ads.AdminNote = 'accept'
+    ORDER BY a.Date DESC;
+END$$
+
+DELIMITER ;
+CALL GetApprovedAdsByCity('Pardis', 'food');
+
+4
+
+  DELIMITER $$
+
+CREATE PROCEDURE SearchAdvertisements(IN searchTerm VARCHAR(255))
+BEGIN
+    SELECT a.Title, ac.FirstName, ac.LastName, a.Description, a.Date
+    FROM Advertisements a
+    JOIN Accounts ac ON a.AID = ac.AID
+    WHERE a.Title LIKE CONCAT('%', searchTerm, '%')
+       OR ac.FirstName LIKE CONCAT('%', searchTerm, '%')
+       OR ac.LastName LIKE CONCAT('%', searchTerm, '%')
+       OR a.Description LIKE CONCAT('%', searchTerm, '%')
+    ORDER BY a.Date DESC;
+END$$
+
+DELIMITER ;
+CALL SearchAdvertisements('zahra');
+
+5
+
+ DELIMITER $$
+
+CREATE PROCEDURE FindLocalUsers(IN contactInfo VARCHAR(50))
+BEGIN
+    DECLARE userCity VARCHAR(50);
+    SELECT ActiveCity INTO userCity
+    FROM Accounts
+    WHERE Phone = contactInfo OR Email = contactInfo;
+    SELECT AID, FirstName, LastName, Phone, Email, ActiveCity, Date
+    FROM Accounts
+    WHERE ActiveCity = userCity;
+END$$
+
+DELIMITER ;
+CALL FindLocalUsers('ali.ahmadi@example.com');
+
+6
+
+   DELIMITER $$
+
+CREATE PROCEDURE TopUsersByAdCount(IN inputDate DATE, IN limitCount INT)
+BEGIN
+    SELECT ac.AID, ac.FirstName, ac.LastName, COUNT(*) AS TotalAds
+    FROM Accounts ac
+    JOIN Advertisements ad ON ac.AID = ad.AID
+    WHERE ad.Date >= inputDate
+    GROUP BY ac.AID, ac.FirstName, ac.LastName
+    ORDER BY TotalAds DESC
+    LIMIT limitCount;
+END$$
+
+DELIMITER ;
+CALL TopUsersByAdCount('2024-07-01', 5);
+
+7
+DELIMITER $$
+
+CREATE PROCEDURE RejectedAdsByCategory(IN categoryName VARCHAR(50))
+BEGIN
+      
+    SELECT ad.ADDID, ad.Title, ad.Description, ad.Date, ac.FirstName, ac.LastName
+    FROM Advertisements ad
+    JOIN Businesses b ON ad.BID = b.BID
+    JOIN Accounts ac ON ad.AID = ac.AID
+    JOIN AddStatus ast ON ad.ADDID = ast.ADDID
+    WHERE b.Type = categoryName
+    AND ast.AdminNote = 'reject'
+    ORDER BY ad.Date DESC;
+END$$
+
+DELIMITER ;
+CALL RejectedAdsByCategory('food');
+
+
+ 8
+
+DELIMITER $$
+
+CREATE PROCEDURE UsersWithMostReports(IN reportType VARCHAR(50))
+BEGIN
+    SELECT ac.AID, ac.FirstName, ac.LastName, COUNT(*) AS ReportCount
+    FROM Accounts ac
+    JOIN Advertisements ad ON ac.AID = ad.AID
+    JOIN Comments cm ON ad.ADDID = cm.ADDID
+    WHERE cm.Type = reportType
+    GROUP BY ac.AID, ac.FirstName, ac.LastName
+    ORDER BY ReportCount DESC;
+END$$
+
+DELIMITER ;
+CALL UsersWithMostReports('restaurant');
+
+
+  

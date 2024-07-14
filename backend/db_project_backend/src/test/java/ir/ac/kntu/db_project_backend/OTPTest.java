@@ -21,6 +21,6 @@ public class OTPTest {
 
     @Test
     public void confirmationTest(){
-        assertTrue(service.confirmOTP("the.real.actual.lordpi@gmail.com", "643095"));
+        assertTrue(service.confirmOTP("the.real.actual.lordpi@gmail.com", "843623"));
     }
 }
