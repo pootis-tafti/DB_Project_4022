@@ -87,4 +87,8 @@ public class AccountService {
     public Account findById(int id) {
         return accountRepository.findById(id);
     }
+
+    public boolean existsByEmail(String email){
+        return accountRepository.existsByEmail(email);
+    }
 }

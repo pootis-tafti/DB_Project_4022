@@ -14,4 +14,8 @@ public class AdminService {
     public boolean existsById(int accountId) {
         return adminRepository.existsById(accountId);
     }
+
+    public boolean existsByEmail(String email) {
+        return adminRepository.existsByEmail(email);
+    }
 }
