@@ -27,8 +27,8 @@ public class AddStatusRepository {
     }
 
     public void createStatus(int ADDID){
-        String sql = "INSERT INTO AddStatus (AdminNote, Status, LastUpdated, ADDID "
-            +"VALUES ('',0,CURRENT_DATE(),?)";
+        String sql = "INSERT INTO AddStatus (AdminNote, Status, LastUpdated, ADDID) "
+            +"VALUES ('not answerd yet',0,CURRENT_DATE() , ?)";
         template.update(sql, ADDID);
     }
 

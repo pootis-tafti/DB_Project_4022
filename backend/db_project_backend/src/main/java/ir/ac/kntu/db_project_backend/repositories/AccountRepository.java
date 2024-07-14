@@ -71,4 +71,9 @@ public class AccountRepository {
         return template.queryForObject(sql, ROW_MAPPER,id);
     }
     
+
+    public boolean existsByEmail(String email) {
+        Integer count = template.queryForObject("SELECT COUNT(*) FROM Account WHERE Email = ?", Integer.class, email);
+        return count > 0;
+    }
 }

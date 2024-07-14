@@ -8,10 +8,15 @@ import org.springframework.stereotype.Repository;
 public class AdminRepository {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate template;
 
     public boolean existsById(int accountId) {
-        Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM AdminsWHERE AID = ?", Integer.class, accountId);
+        Integer count = template.queryForObject("SELECT COUNT(*) FROM AdminsWHERE AID = ?", Integer.class, accountId);
+        return count > 0;
+    }
+
+    public boolean existsByEmail(String email) {
+        Integer count = template.queryForObject("SELECT COUNT(*) FROM Admins AS H Join Account as A on A.AID = H.AID  WHERE Email = ?", Integer.class, email);
         return count > 0;
     }
 }

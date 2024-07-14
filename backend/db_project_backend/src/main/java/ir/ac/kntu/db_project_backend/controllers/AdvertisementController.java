@@ -1,6 +1,6 @@
 package ir.ac.kntu.db_project_backend.controllers;
 
-import ir.ac.kntu.db_project_backend.models.Advertisment;
+import ir.ac.kntu.db_project_backend.models.Advertisement;
 import ir.ac.kntu.db_project_backend.services.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,13 +17,13 @@ public class AdvertisementController {
     private AdvertisementService advertisementService;
 
     @PostMapping
-    public ResponseEntity<Void> addAdvertisement(@RequestBody Advertisment advertisment) {
+    public ResponseEntity<Void> addAdvertisement(@RequestBody Advertisement advertisment) {
         advertisementService.addAdvertisement(advertisment);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateAdvertisement(@PathVariable int id, @RequestBody Advertisment advertisment) {
+    public ResponseEntity<Void> updateAdvertisement(@PathVariable int id, @RequestBody Advertisement advertisment) {
         advertisment.setId(id);
         advertisementService.updateAdvertisement(advertisment);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -36,29 +36,29 @@ public class AdvertisementController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<List<Advertisment>> filterAdvertisements(@RequestParam int maxPrice, 
+    public ResponseEntity<List<Advertisement>> filterAdvertisements(@RequestParam int maxPrice, 
                                                                    @RequestParam int minPrice,
                                                                    @RequestParam boolean isNew, 
                                                                    @RequestParam String keyword) {
-        List<Advertisment> advertisments = advertisementService.filter(maxPrice, minPrice, isNew, keyword);
+        List<Advertisement> advertisments = advertisementService.filter(maxPrice, minPrice, isNew, keyword);
         return new ResponseEntity<>(advertisments, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Advertisment> findById(@PathVariable int id) {
-        Advertisment advertisment = advertisementService.findById(id);
+    public ResponseEntity<Advertisement> findById(@PathVariable int id) {
+        Advertisement advertisment = advertisementService.findById(id);
         return new ResponseEntity<>(advertisment, HttpStatus.OK);
     }
 
     @GetMapping("/business/{businessId}")
-    public ResponseEntity<Advertisment> findByBusiness(@PathVariable int businessId) {
-        Advertisment advertisment = advertisementService.findByBusiness(businessId);
+    public ResponseEntity<Advertisement> findByBusiness(@PathVariable int businessId) {
+        Advertisement advertisment = advertisementService.findByBusiness(businessId);
         return new ResponseEntity<>(advertisment, HttpStatus.OK);
     }
 
     @GetMapping("/account/{accountId}")
-    public ResponseEntity<Advertisment> findByAccount(@PathVariable int accountId) {
-        Advertisment advertisment = advertisementService.findByAccount(accountId);
+    public ResponseEntity<Advertisement> findByAccount(@PathVariable int accountId) {
+        Advertisement advertisment = advertisementService.findByAccount(accountId);
         return new ResponseEntity<>(advertisment, HttpStatus.OK);
     }
 }

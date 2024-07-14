@@ -6,14 +6,14 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.Nullable;
 
-import ir.ac.kntu.db_project_backend.models.Advertisment;
+import ir.ac.kntu.db_project_backend.models.Advertisement;
 
-public class AdvertismentRowMapper implements RowMapper<Advertisment> {
+public class AdvertisementRowMapper implements RowMapper<Advertisement> {
     @Override
     @Nullable
-    public Advertisment mapRow(@Nullable ResultSet rs, int rowNum) throws SQLException {
+    public Advertisement mapRow(@Nullable ResultSet rs, int rowNum) throws SQLException {
         if(rs == null) return null;
-        Advertisment advertisment = new Advertisment();
+        Advertisement advertisment = new Advertisement();
         advertisment.setDate(rs.getDate("DateModified"));
         advertisment.setId(rs.getInt("ADDID"));
         advertisment.setDescription(rs.getString("Description"));

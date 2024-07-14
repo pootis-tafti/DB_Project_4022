@@ -3,7 +3,7 @@ package ir.ac.kntu.db_project_backend.models;
 import java.sql.Date;
 
 
-public class Advertisment {
+public class Advertisement {
 
     private int id;
 
