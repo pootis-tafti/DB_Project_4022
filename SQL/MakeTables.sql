@@ -29,7 +29,7 @@ CREATE TABLE Addresses(
     FOREIGN KEY (CID) REFERENCES Cities(id)
 );
 
-CREATE TABLE Advertisements (
+CREATE TABLE  IF NOT EXISTS Advertisements (
     ADDID INT UNIQUE AUTO_INCREMENT,
     BID INT,
     AID INT NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE Comments (
 
 CREATE TABLE AddStatus (
     Status BIT NOT NULL,
-    ADDID INT PRIMARY KEY NOT NULL,
+    ADDID INT UNIQUE NOT NULL,
     AdminNote TEXT NOT NULL,
     LastUpdated DATE,
     FOREIGN KEY (ADDID) REFERENCES Advertisements(ADDID),
@@ -82,7 +82,7 @@ CREATE TABLE Admins(
 );
 
 CREATE TABLE Type(
-    ID TINYINT NOT NULL,
+    ID TINYINT UNIQUE NOT NULL,
     Name VARCHAR(30),
     PRIMARY KEY (ID)
 );
@@ -92,13 +92,3 @@ INSERT INTO Type(ID, Name) VALUES
     (2, 'negative feedback(complaint)'),
     (3, 'brand value'),
     (4, 'other');
-
-CREATE TABLE Access(
-    Code BIT PRIMARY KEY UNIQUE NOT NULL,
-    AccessLevel VARCHAR(10) NOT NULL
-);
-
-INSERT INTO access(Code, AccessLevel) VALUES
-    (0, 'Owner'),
-    (1, 'Manager');
-

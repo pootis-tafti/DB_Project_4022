@@ -17,21 +17,21 @@ public class CityRepository {
 
     private final  CityRowMapper ROW_MAPPER = new CityRowMapper();
 
-    private final String MAIN_QUERY = "SELECT * FROM cities J";
+    private final String MAIN_QUERY = " SELECT * FROM cities AS C JOIN provinces AS P ON C.province_id = p.id ";
     
     public List<City> findAll(){
         return template.query(MAIN_QUERY, ROW_MAPPER);
     }
 
     public List<City> findByProvince(int provinceId){
-        return template.query(MAIN_QUERY + "WHERE province_id = ?" + provinceId, ROW_MAPPER);
+        return template.query(MAIN_QUERY + " WHERE province_id = ?" + provinceId, ROW_MAPPER);
     }
 
     public List<City> findByName(String name){
-        return template.query(MAIN_QUERY + "WHERE name = ?",ROW_MAPPER, name );
+        return template.query(MAIN_QUERY + " WHERE name = ?",ROW_MAPPER, name );
     }
 
     public City findById(int id){
-        return template.queryForObject(MAIN_QUERY + "WHERE id = ?", ROW_MAPPER,id);
+        return template.queryForObject(MAIN_QUERY + " WHERE id = ?", ROW_MAPPER,id);
     }
 }

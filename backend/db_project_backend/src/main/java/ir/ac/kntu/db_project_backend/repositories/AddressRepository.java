@@ -13,7 +13,7 @@ public class AddressRepository {
     @Autowired
     private JdbcTemplate template;
 
-    private final String MAIN_QUERY = "SELECT * FROM addresses AS A JOIN cities as C JOIN provinces AS P ON P.id = C.province_id AND A.CID = C.id LIMIT 100";
+    private final String MAIN_QUERY = "SELECT * FROM addresses AS A JOIN cities as C JOIN provinces AS P ON P.id = C.province_id AND A.CID = C.id LIMIT 100 ";
 
     private final AddressRowMapper ROW_MAPPER = new AddressRowMapper();
 
@@ -23,7 +23,7 @@ public class AddressRepository {
     }
 
     public void addAddress(Address address,int BID){
-        String sql = "INSERT INTO addresses (BID,CID,Address) VALUES"
+        String sql = "INSERT INTO addresses (BID,CID,Address) VALUES "
             +"(?,?,?,?)";
         template.update(sql, BID, address.getCity().getCityId(), address.getAddress());
     }

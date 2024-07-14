@@ -17,15 +17,15 @@ public class CommentRepository {
 
     private final CommentRowMapper ROW_MAPPER = new CommentRowMapper();
 
-    private final String MAIN_QUERY = "SELECT * FROM comments join type on type.ID = comments.Type";
+    private final String MAIN_QUERY = "SELECT * FROM comments join type on type.ID = comments.Type ";
 
     public void addComment(Comment comment, int ADDID){
-        String sql = "INSERT INTO Comments (ADDID,AID, Type, Description) VALUES"
-            + "(?,?,?,?)";
+        String sql = "INSERT INTO Comments (ADDID,AID, Type, Description) VALUES "
+            + " (?,?,?,?)";
         template.update(sql, ADDID, comment.getAccountId(),comment.getType().getId(), comment.getDescription());
     }
 
     public List<Comment> findByAd(int ADDID){
-        return template.query(MAIN_QUERY + "WHERE ADDID = ?", ROW_MAPPER, ADDID);
+        return template.query(MAIN_QUERY + " WHERE ADDID = ?", ROW_MAPPER, ADDID);
     }
 }

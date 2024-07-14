@@ -18,6 +18,6 @@ public class CommentTypeRepository {
     private final CommentTypeRowMapper ROW_MAPPER = new CommentTypeRowMapper();
 
     public List<CommentType> findAll(){
-        return template.query("SELECT * FROM Type", ROW_MAPPER);
+        return template.query(" SELECT * FROM Type ", ROW_MAPPER);
     }
 }

@@ -13,6 +13,7 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
+    
     public List<Image> findById(int id) {
         return imageRepository.findById(id);
     }
